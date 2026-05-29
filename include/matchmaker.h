@@ -23,7 +23,7 @@ typedef struct {
     pthread_mutex_t elo_mutex;
 
     // Variable de condicion: permite a los jugadores "dormir" hasta que un tablero se libere
-    // o hasta que llegue un oponente valido (minimiza el busy-waiting)
+    // o hasta que llegue un oponente valido (minimiza el busy-waiting) 
     pthread_cond_t state_changed;
 
     // --- ESTADO DEL SISTEMA ---

@@ -74,14 +74,11 @@ void* player_routine(void* arg) {
         if (selected_board_id != -1) {
              pthread_mutex_unlock(&tournament.match_mutex);
 
-
-
         }else {
             pthread_cond_wait(&tournament.state_changed, &tournament.match_mutex);
 
             if (me->state == PLAYING) {
                 pthread_mutex_unlock(&tournament.match_mutex);
-
 
             }else {
                 pthread_mutex_unlock(&tournament.match_mutex);
@@ -89,8 +86,6 @@ void* player_routine(void* arg) {
         }
 
     }
-
-    // Aquí irá el ciclo while para buscar partidas
 
     return NULL;
 }

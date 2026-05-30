@@ -13,9 +13,10 @@ typedef struct {
     int player1_id;
     int player2_id;
 
-    pthread_t thread;
+    pthread_t thread; // hilo asociado al tablero
 } Board;
 
+extern Board* board;
 
 void* board_routine(void* arg);
 

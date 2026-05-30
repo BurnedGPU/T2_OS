@@ -23,9 +23,10 @@ typedef struct {
 
     int wait_ticket;
 
-    // El hilo nativo de POSIX asociado a este jugador
-    pthread_t thread;
+    pthread_t thread; // hilo asociado al jugador
 } Player;
+
+extern Player* player;
 
 // Prototipo de la funcion que ejecutara el hilo del jugador
 void* player_routine(void* arg);

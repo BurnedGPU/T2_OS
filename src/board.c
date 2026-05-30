@@ -9,6 +9,7 @@
 #include "player.h"
 #include "config.h"
 #include <unistd.h>
+#include "elo.h"
 
 void* board_routine(void* arg) {
     Board* b = (Board*)arg;     // Transformamos el argumento genérico de vuelta a un puntero de Tablero
@@ -44,13 +45,10 @@ void* board_routine(void* arg) {
 
         pthread_mutex_lock(&tournament.elo_mutex);
 
-        if (match_result == 0) {
+        Player* p1 = &tournament.players[p1_id];
+        Player* p2 = &tournament.players[p2_id];
 
-        }else if (match_result == 1) {
-
-        }else if (match_result == 2) {
-
-        }
+        update_elo(p1, p2, match_result);
 
         pthread_mutex_unlock(&tournament.elo_mutex);
         

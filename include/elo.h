@@ -5,14 +5,9 @@
 #ifndef ELO_H
 #define ELO_H
 
-typedef struct {
-int K;
-int S;
-int E;
-int new_elo;
+#include "player.h"
 
-} Elo;
-
-void* elo_calculator(void* arg);
+// match_result: 0 = Empate, 1 = Gana p1, 2 = Gana p2
+void update_elo(Player* p1, Player* p2, int match_result);
 
 #endif

@@ -1,15 +1,20 @@
-cmake_minimum_required(VERSION 4.2)
-project(tasktwo C)
+cmake_minimum_required(VERSION 3.28)
+project(cmatch C)
 
 set(CMAKE_C_STANDARD 17)
-set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
-
+# Incluir la carpeta de cabeceras
 include_directories(include)
 
-file(GLOB SOURCES "src/*.c")
+# Agregar TODOS los archivos .c al ejecutable
+add_executable(cmatch
+        src/main.c
+        src/config.c
+        src/matchmaker.c
+        src/player.c
+        src/board.c
+        src/elo.c
+)
 
-add_executable(cmatch ${SOURCES})
-
-target_link_libraries(cmatch pthread)
+# Enlazar la libreria pthread y la libreria matematica (m)
+target_link_libraries(cmatch pthread m)

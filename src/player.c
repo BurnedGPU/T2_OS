@@ -71,18 +71,63 @@ void* player_routine(void* arg) {
             }
         }
 
-        if (selected_board_id != -1) {
-             pthread_mutex_unlock(&tournament.match_mutex);
+        // seccion 3
+        int is_playing_now = 0;
 
+        if (selected_board_id != -1) {
+            // yo arme la partida
+            is_playing_now = 1;
+            pthread_mutex_unlock(&tournament.match_mutex);
         }else {
+            // yo no arme la partida asi que espero a que me inviten
             pthread_cond_wait(&tournament.state_changed, &tournament.match_mutex);
 
             if (me->state == PLAYING) {
-                pthread_mutex_unlock(&tournament.match_mutex);
-
-            }else {
-                pthread_mutex_unlock(&tournament.match_mutex);
+                is_playing_now = 1;
             }
+            pthread_mutex_unlock(&tournament.match_mutex);
+        }
+
+        // seccion 4
+        if (is_playing_now) {
+            pthread_mutex_lock(&tournament.match_mutex);
+            int iam_on_board = 1;
+
+            // ciclo anti spurious-wakeups
+            while (iam_on_board == 1 && !tournament.shutdown_flag) {
+                iam_on_board = 0;
+                for (int i=0; i < sim_config.k_boards; i++) {
+                    if (tournament.boards[i].player1_id == me->id || tournament.boards[i].player2_id == me->id) {
+                        iam_on_board = 1;
+                        break;
+                    }
+                }
+                if (iam_on_board == 1) {
+                    pthread_cond_wait(&tournament.state_changed, &tournament.match_mutex);
+                }
+            }
+            pthread_mutex_unlock(&tournament.match_mutex);
+
+            if (tournament.shutdown_flag) {
+                break;
+            }
+
+            float chance = (float)rand() / (float)RAND_MAX;
+
+            if (chance <= sim_config.reenter_probability) {
+                printf("continua el juego");
+
+            } else {
+                printf("jugador se retira");
+                me->state = FINISHED;
+
+                pthread_mutex_lock(&tournament.match_mutex);
+                tournament.active_players--;
+                pthread_mutex_unlock(&tournament.match_mutex);
+                break;
+            }
+
+
         }
 
     }

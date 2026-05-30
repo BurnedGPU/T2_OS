@@ -6,6 +6,20 @@
 #include "matchmaker.h"
 #include "board.h"
 #include "player.h"
+#include "signal.h"
+
+void handle_sigint(int sig) {
+    (void) sig;
+
+    printf("\n[Sistema] Señal de apagado recibida. Iniciando Graceful Shutdown...\n");
+
+    pthread_mutex_lock(&tournament.match_mutex);
+    tournament.shutdown_flag = 1;
+
+    pthread_cond_broadcast(&tournament.state_changed);
+    pthread_mutex_unlock(&tournament.match_mutex);
+
+}
 
 int main(void) {
     printf("Iniciando motor cmatch...\n");
@@ -16,6 +30,8 @@ int main(void) {
     // 2. Asignar memoria e inicializar Mutex/Variables de condicion
     // Esta funcion que armamos hace todos los malloc y los init
     init_matchmaker();
+
+    signal(SIGINT, handle_sigint);
 
     printf("Creando %d hilos de tableros...\n", sim_config.k_boards);
     // 3. Crear los threads de los tableros activos

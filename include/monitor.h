@@ -2,7 +2,13 @@
 // Created by franc on 21-05-2026.
 //
 
-#ifndef TASKTWO_MONITOR_H
-#define TASKTWO_MONITOR_H
+#ifndef MONITOR_H
+#define MONITOR_H
 
-#endif //TASKTWO_MONITOR_H
+void player_stats(int player_id);
+
+void current_matches(void);
+
+void match_status(int game_id);
+
+#endif

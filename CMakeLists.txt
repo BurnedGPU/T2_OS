@@ -14,6 +14,8 @@ add_executable(cmatch
         src/player.c
         src/board.c
         src/elo.c
+        src/monitor.c
+        src/snapshot.c
 )
 
 # Enlazar la libreria pthread y la libreria matematica (m)

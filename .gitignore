@@ -1,0 +1,30 @@
+# ==========================================
+# Entorno de desarrollo (CLion / JetBrains)
+# ==========================================
+.idea/
+cmake-build-*/
+
+# ==========================================
+# Archivos de compilación y ejecutables
+# ==========================================
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.so
+*.a
+cmatch
+
+# ==========================================
+# Archivos generados por tu simulación
+# ==========================================
+dump.bin
+scratch*.txt
+*.log
+
+# ==========================================
+# Archivos de Sistema Operativo (Ruido)
+# ==========================================
+.DS_Store
+Thumbs.db

@@ -1,7 +1,4 @@
-//
-// Created by franc on 21-05-2026.
-//
-
+#define _DEFAULT_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include "board.h"

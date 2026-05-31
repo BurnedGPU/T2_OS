@@ -148,6 +148,7 @@ cada una de las opciones representa las funciones de monitoreo indicadas teniend
 * la p imprime los datos de un jugador segun su id (ej. p4)
 * la t imprime los datos de un tablero especifico segun su id (ej. t2)
 * la s detiene la simulacion por completo
+
 Para probar cada una de las funciones se debe escribir en la terminal dichos
 comandos mientras la partida esta en curso, por lo que toda la informacion desplegada
 dependera de que tan rapido se consulten los datos antes de que la simulacion llegue a su fin.

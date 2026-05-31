@@ -30,10 +30,24 @@ int main(void) {
     // 1. Cargar la configuracion desde el archivo .env
     load_config(".env");
 
-    // 2. Asignar memoria e inicializar Mutex/Variables de condicion
-    // Esta funcion que armamos hace todos los malloc y los init
     init_matchmaker();
 
+    // ================================================================
+    // PASO A: INICIALIZAR POR DEFECTO (Antes del Snapshot)
+    // ================================================================
+    for (int i = 0; i < sim_config.n_players; i++) {
+        tournament.players[i].id = i;
+        tournament.players[i].elo = 1000; // Todos parten con 1000 por defecto
+        tournament.players[i].wins = 0;
+        tournament.players[i].losses = 0;
+        tournament.players[i].draws = 0;
+        tournament.players[i].state = WAITING;
+    }
+
+    // ================================================================
+    // PASO B: CARGAR SNAPSHOT
+    // Si dump.bin existe, va a SOBRESCRIBIR los 1000 que acabamos de poner.
+    // ================================================================
     load_snapshot();
 
     signal(SIGINT, handle_sigint);
@@ -49,16 +63,12 @@ int main(void) {
     }
 
     printf("Creando %d hilos de jugadores...\n", sim_config.n_players);
-    // 4. Inicializar datos y crear los threads de los jugadores
-    for (int i = 0; i < sim_config.n_players; i++) {
-        tournament.players[i].id = i;
-        tournament.players[i].elo = 1000; // Todos parten con 1000 de ELO
-        tournament.players[i].wins = 0;
-        tournament.players[i].losses = 0;
-        tournament.players[i].draws = 0;
-        tournament.players[i].state = WAITING;
 
-        // Lanzamos el hilo. Le pasamos su respectiva estructura de jugador como argumento
+    // ================================================================
+    // PASO C: CREAR HILOS DE JUGADORES (Sin modificar sus datos)
+    // ================================================================
+    for (int i = 0; i < sim_config.n_players; i++) {
+        // ATENCIÓN AQUÍ: Solo lanzamos el hilo. Ya no tocamos el ELO ni las victorias.
         if (pthread_create(&tournament.players[i].thread, NULL, player_routine, &tournament.players[i]) != 0) {
             perror("Error creando el thread del jugador");
             exit(EXIT_FAILURE);
@@ -73,7 +83,6 @@ int main(void) {
     } else {
         pthread_detach(cli_thread);
     }
-
 
     // Finalizador de partidas (gestion de graceful shutdown y otras formas de apagado)
     int stall_counter = 0;

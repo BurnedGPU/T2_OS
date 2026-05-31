@@ -26,7 +26,7 @@ void* player_routine(void* arg) {
         if (me->state != WAITING) {
             me->state = WAITING;
             me->wait_ticket = global_ticket++;
-            printf("[Jugador %d] Buscando oponente (ELO %d; Ticket: %d) ...\n", me->id, me->elo, me->wait_ticket);
+            //printf("[Jugador %d] Buscando oponente (ELO %d; Ticket: %d) ...\n", me->id, me->elo, me->wait_ticket);
         };
 
         int best_opponent_id = -1;
@@ -62,7 +62,7 @@ void* player_routine(void* arg) {
                     me->state = PLAYING;
                     opponent->state = PLAYING;
 
-                    printf("[Matchmaker] Partida armada: J%d vs J%d en Tablero %d\n", me->id, opponent->id, selected->id);
+                    //printf("[Matchmaker] Partida armada: J%d vs J%d en Tablero %d\n", me->id, opponent->id, selected->id);
 
                     // Despertamos al tablero y al oponente
                     pthread_cond_broadcast(&tournament.state_changed);
@@ -115,10 +115,10 @@ void* player_routine(void* arg) {
             float chance = (float)rand() / (float)RAND_MAX;
 
             if (chance <= sim_config.reenter_probability) {
-                printf("continua el juego");
+                //printf("continua el juego");
 
             } else {
-                printf("jugador se retira");
+                //printf("jugador se retira");
                 me->state = FINISHED;
 
                 pthread_mutex_lock(&tournament.match_mutex);

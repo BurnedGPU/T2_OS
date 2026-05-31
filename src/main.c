@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#include <monitor.h>
 #include "config.h"
 #include "matchmaker.h"
 #include "board.h"
@@ -66,6 +66,14 @@ int main(void) {
     }
 
     printf("Todos los hilos estan en ejecucion. Simulacion corriendo...\n");
+
+    pthread_t cli_thread;
+    if (pthread_create(&cli_thread, NULL, cli_routine, NULL) != 0) {
+        perror("Error creando el hilo del monitor");
+    } else {
+        pthread_detach(cli_thread);
+    }
+
 
     // Finalizador de partidas (gestion de graceful shutdown y otras formas de apagado)
     int stall_counter = 0;

@@ -11,4 +11,6 @@ void current_matches(void);
 
 void match_status(int game_id);
 
+void* cli_routine(void* arg);
+
 #endif

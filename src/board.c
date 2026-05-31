@@ -56,7 +56,7 @@ void* board_routine(void* arg) {
         b->player1_id = -1;
         b->player2_id = -1;
 
-        printf("[Tablero %d] Partida finalizada. Tablero liberado.\n", b->id);
+        //printf("[Tablero %d] Partida finalizada. Tablero liberado.\n", b->id);
 
         // Gritamos por el broadcast para despertar a los jugadores de esta partida (y que se vayan)
         // y para avisar a los que buscan partida que hay un tablero libre.

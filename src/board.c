@@ -14,7 +14,7 @@ void* board_routine(void* arg) {
     while (1) {
         pthread_mutex_lock(&tournament.match_mutex);
 
-        while (!tournament.shutdown_flag && b->is_occupied == 0) {
+        while (!tournament.shutdown_flag && b->is_occupied == 0) { // mantiene a los tableros controlados para que no se activen todos
             pthread_cond_wait(&tournament.state_changed, &tournament.match_mutex);
         }
 
@@ -40,7 +40,7 @@ void* board_routine(void* arg) {
         // Generamos un resultado aleatorio: 0 = Empate, 1 = Gana P1, 2 = Gana P2
         int match_result = rand() % 3;
 
-        pthread_mutex_lock(&tournament.elo_mutex);
+        pthread_mutex_lock(&tournament.elo_mutex); // Secccion donde se modifca el ELO de los dos jugadores
 
         Player* p1 = &tournament.players[p1_id];
         Player* p2 = &tournament.players[p2_id];
@@ -49,7 +49,7 @@ void* board_routine(void* arg) {
 
         pthread_mutex_unlock(&tournament.elo_mutex);
         
-        // limpieza
+        // limpieza del tablero
         pthread_mutex_lock(&tournament.match_mutex);
 
         b->is_occupied = 0;

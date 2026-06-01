@@ -21,14 +21,13 @@ typedef struct {
     int draws;
     PlayerState state;
 
-    int wait_ticket;
+    int wait_ticket; // ticket de espera para el emparejamiento en player.c
 
     pthread_t thread; // hilo asociado al jugador
 } Player;
 
 extern Player* player;
 
-// Prototipo de la funcion que ejecutara el hilo del jugador
-void* player_routine(void* arg);
+void* player_routine(void* arg); // funcion que ejecuta el hilo del jugador
 
 #endif // PLAYER_H

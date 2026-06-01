@@ -9,7 +9,7 @@
 
 Config sim_config;
 
-void load_config(const char *filename) {
+void load_config(const char *filename) { // esta funcion "parsea" el .env para que sus datos puedan ser leidos
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Error abriendo el archivo de configuracion .env");

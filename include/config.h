@@ -2,7 +2,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-typedef struct {
+typedef struct { // copia de las variables del .env
     int n_players;
     int k_boards;
     int k_elo;
@@ -12,8 +12,8 @@ typedef struct {
     char snapshot_path[256];
 } Config;
 
-extern Config sim_config;
+extern Config sim_config; // sim_config se utiliza constantemente para rescatar cualquier valor del .env dentro de otras funciones
 
-void load_config(const char *filename);
+void load_config(const char *filename); // load_config se utiliza al principio del main()
 
 #endif

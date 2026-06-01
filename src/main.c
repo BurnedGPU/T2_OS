@@ -77,7 +77,7 @@ int main(void) {
 
     printf("Todos los hilos estan en ejecucion. Simulacion corriendo...\n");
 
-    pthread_t cli_thread;
+    pthread_t cli_thread;  // Aqui es donde se invoca la interfaz de monitorizacion
     if (pthread_create(&cli_thread, NULL, cli_routine, NULL) != 0) {
         perror("Error creando el hilo del monitor");
     } else {
@@ -86,7 +86,7 @@ int main(void) {
 
     // Finalizador de partidas (gestion de graceful shutdown y otras formas de apagado)
     int stall_counter = 0;
-    while (1) { //
+    while (1) {
         usleep(500000); // 500,000 microsegundos = 0.5 segundos
 
         pthread_mutex_lock(&tournament.match_mutex);

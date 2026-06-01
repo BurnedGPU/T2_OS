@@ -31,10 +31,9 @@ typedef struct {
     int active_players;   // Cantidad de jugadores que siguen vivos en el sistema
 } MatchmakerState;
 
-// Declaracion de la variable global del torneo
-extern MatchmakerState tournament;
+extern MatchmakerState tournament; // Declaracion de la variable global del torneo como tournament
 
-// Prototipos
+// declaracion de las funciones que iniciaran y destruiran el matchmaker en el main
 void init_matchmaker();
 void destroy_matchmaker();
 

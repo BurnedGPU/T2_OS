@@ -18,6 +18,6 @@ typedef struct {
 
 extern Board* board;
 
-void* board_routine(void* arg);
+void* board_routine(void* arg); // funcion del ciclo de vida del tablero
 
 #endif // BOARD_H

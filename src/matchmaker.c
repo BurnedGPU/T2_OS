@@ -9,12 +9,12 @@
 
 MatchmakerState tournament;
 
-void init_matchmaker() {
+void init_matchmaker() { // funcion que practicamente inicia todo el juego
     // 1. Reservar memoria para los N jugadores y K tableros
     tournament.players = malloc(sim_config.n_players * sizeof(Player));
     tournament.boards = malloc(sim_config.k_boards * sizeof(Board));
 
-    if (!tournament.players || !tournament.boards) {
+    if (!tournament.players || !tournament.boards) { // valida si se pudo asignar memoria
         perror("Error al asignar memoria para el torneo");
         exit(EXIT_FAILURE);
     }
@@ -29,7 +29,7 @@ void init_matchmaker() {
     pthread_cond_init(&tournament.state_changed, NULL);
 
     // 4. Inicializacion basica de los tableros
-    for (int i = 0; i < sim_config.k_boards; i++) {
+    for (int i = 0; i < sim_config.k_boards; i++) { // aqui se inicializan los tableros, a diferencia de los jugadores que se inician en el main
         tournament.boards[i].id = i;
         tournament.boards[i].is_occupied = 0;
         tournament.boards[i].player1_id = -1;
